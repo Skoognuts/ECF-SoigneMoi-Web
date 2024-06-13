@@ -1,20 +1,69 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello LandingPageController!{% endblock %}
+{% block title %}Accueil{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div id="cookieNotice" class="cookie-notice-wrapper" style="display: flex;">
+        <div class="cookie-notice">
+            <div id="closeIcon" style="display: none;"></div>
+            <h4 class="mb-3">🍪 Nous avons des cookies 🍪</h4>
+            <p class="cookie-text">Cette application utilise des cookies ou des technologies similaires afin de proposer une expérience de navigation optimale ainsi que des recommandations personnalisées. En poursuivant votre navigation, vous acceptez nos <b><a href="{{ path('app_cgu') }}">Conditions Générales d'Utilisation</a></b>.</p>
+            <div class="btn-wrap w-100 d-flex flex-row justify-content-center">
+                <button class="btn btn-primary" onclick="acceptCookieConsent();">Continuer</button>
+            </div>
+        </div>
+    </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/skoog/Desktop/ECF/Web/src/Controller/LandingPageController.php</code></li>
-        <li>Your template at <code>C:/Users/skoog/Desktop/ECF/Web/templates/landing_page/index.html.twig</code></li>
-    </ul>
-</div>
+    <script>
+        // Création du Cookie de Consentement
+        const cookieNotice = document.getElementById('cookieNotice');
+        function setCookie(cname, cvalue, exdays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays*24*60*60*1000));
+            let expires = "expires="+ d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        // Suppression du Cookie de Consentement
+        function deleteCookie(cname) {
+            const d = new Date();
+            d.setTime(d.getTime() + (24*60*60*1000));
+            let expires = "expires="+ d.toUTCString();
+            document.cookie = cname + "=;" + expires + ";path=/";
+        }
+
+        // Lecture du Cookie de Consentement
+        function getCookie(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for(let i = 0; i <ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        // Parametrage du Cookie de Consentement
+        function acceptCookieConsent(){
+            deleteCookie('user_cookie_consent');
+            setCookie('user_cookie_consent', 1, 30);
+            cookieNotice.style.display = "none";
+        }
+
+        // Vérification du cookie de consentement
+        let cookie_consent = getCookie("user_cookie_consent");
+        if(cookie_consent != ""){
+            cookieNotice.style.display = "none";
+        }else{
+            cookieNotice.style.display = "flex";
+        }
+    </script>
+
 {% endblock %}

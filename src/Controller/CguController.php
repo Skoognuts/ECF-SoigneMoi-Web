@@ -6,11 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class LandingPageController extends AbstractController
+class CguController extends AbstractController
 {
-    #[Route('/', name: 'app_landing_page')]
+    #[Route('/cgu', name: 'app_cgu')]
     public function index(): Response
     {
-        return $this->render('landing_page/index.html.twig', []);
+        return $this->render('cgu/index.html.twig', [
+            'controller_name' => 'CguController',
+        ]);
     }
 }
