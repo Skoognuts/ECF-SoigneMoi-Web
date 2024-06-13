@@ -17,3 +17,8 @@
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+###> miscellaneous ##
+/public/styles/style.scss
+/public/styles/style.css.map
+###< miscellaneous ##
