@@ -40,10 +40,17 @@ class Stay
     #[ORM\OneToMany(targetEntity: Notice::class, mappedBy: 'stay')]
     private Collection $notices;
 
+    /**
+     * @var Collection<int, Prescription>
+     */
+    #[ORM\OneToMany(targetEntity: Prescription::class, mappedBy: 'stay')]
+    private Collection $prescriptions;
+
     // Définition des getters et setters
     public function __construct()
     {
         $this->notices = new ArrayCollection();
+        $this->prescriptions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -134,6 +141,35 @@ class Stay
         if ($this->notices->removeElement($notice)) {
             if ($notice->getStay() === $this) {
                 $notice->setStay(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Prescription>
+     */
+    public function getPrescriptions(): Collection
+    {
+        return $this->prescriptions;
+    }
+
+    public function addPrescription(Prescription $prescription): static
+    {
+        if (!$this->prescriptions->contains($prescription)) {
+            $this->prescriptions->add($prescription);
+            $prescription->setStay($this);
+        }
+
+        return $this;
+    }
+
+    public function removePrescription(Prescription $prescription): static
+    {
+        if ($this->prescriptions->removeElement($prescription)) {
+            if ($prescription->getStay() === $this) {
+                $prescription->setStay(null);
             }
         }
 
