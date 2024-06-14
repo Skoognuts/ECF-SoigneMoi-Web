@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\StayRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -32,7 +34,18 @@ class Stay
     #[ORM\JoinColumn(nullable: false)]
     private ?User $doctor = null;
 
+    /**
+     * @var Collection<int, Notice>
+     */
+    #[ORM\OneToMany(targetEntity: Notice::class, mappedBy: 'stay')]
+    private Collection $notices;
+
     // Définition des getters et setters
+    public function __construct()
+    {
+        $this->notices = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -94,6 +107,35 @@ class Stay
     public function setDoctor(?User $doctor): static
     {
         $this->doctor = $doctor;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Notice>
+     */
+    public function getNotices(): Collection
+    {
+        return $this->notices;
+    }
+
+    public function addNotice(Notice $notice): static
+    {
+        if (!$this->notices->contains($notice)) {
+            $this->notices->add($notice);
+            $notice->setStay($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotice(Notice $notice): static
+    {
+        if ($this->notices->removeElement($notice)) {
+            if ($notice->getStay() === $this) {
+                $notice->setStay(null);
+            }
+        }
 
         return $this;
     }
