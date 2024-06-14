@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -38,7 +40,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $lastname = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $address = null;
 
     #[ORM\Column(nullable: true)]
@@ -47,7 +49,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToOne(inversedBy: 'doctors')]
     private ?Specialty $specialty = null;
 
+    /**
+     * @var Collection<int, Stay>
+     */
+    #[ORM\OneToMany(targetEntity: Stay::class, mappedBy: 'user')]
+    private Collection $stays;
+
+    /**
+     * @var Collection<int, Stay>
+     */
+    #[ORM\OneToMany(targetEntity: Stay::class, mappedBy: 'doctor')]
+    private Collection $doctor_stays;
+
     // Définition des getters et setters
+    public function __construct()
+    {
+        $this->stays = new ArrayCollection();
+        $this->doctor_stays = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -177,6 +197,64 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setSpecialty(?Specialty $specialty): static
     {
         $this->specialty = $specialty;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Stay>
+     */
+    public function getStays(): Collection
+    {
+        return $this->stays;
+    }
+
+    public function addStay(Stay $stay): static
+    {
+        if (!$this->stays->contains($stay)) {
+            $this->stays->add($stay);
+            $stay->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStay(Stay $stay): static
+    {
+        if ($this->stays->removeElement($stay)) {
+            if ($stay->getUser() === $this) {
+                $stay->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Stay>
+     */
+    public function getDoctorStays(): Collection
+    {
+        return $this->doctor_stays;
+    }
+
+    public function addDoctorStay(Stay $doctorStay): static
+    {
+        if (!$this->doctor_stays->contains($doctorStay)) {
+            $this->doctor_stays->add($doctorStay);
+            $doctorStay->setDoctor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDoctorStay(Stay $doctorStay): static
+    {
+        if ($this->doctor_stays->removeElement($doctorStay)) {
+            if ($doctorStay->getDoctor() === $this) {
+                $doctorStay->setDoctor(null);
+            }
+        }
 
         return $this;
     }
