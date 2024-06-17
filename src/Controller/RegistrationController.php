@@ -15,16 +15,15 @@ use Symfony\Component\Routing\Attribute\Route;
 class RegistrationController extends AbstractController
 {
     // Route de création d'un nouveau compte utilisateur
-    #[Route('/register', name: 'app_register')]
+    #[Route('/register', name: 'app_register', methods: ['GET', 'POST'])]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserRepository $userRepository): Response
     {
         // Déclaration des variables
-        $sameEmailError = false;
-
-        // Création du formulaire
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
+        $fakeEmailError = false;
+        $existingUserError = false;
 
         // Contrôle du clic
         if ($form->isSubmitted() && $form->isValid()) {
@@ -32,18 +31,31 @@ class RegistrationController extends AbstractController
             $user->setFirstName(ucwords($form->get('firstname')->getData()));
             $user->setLastName(strtoupper($form->get('lastname')->getData()));
             $user->setAddress(ucwords($form->get('address')->getData()));
+
+            // Gestion du regex de l'adresse mail
+            if (!filter_var($form->get('email')->getData(), FILTER_VALIDATE_EMAIL)) {
+                $fakeEmailError = true;
+                return $this->render('registration/register.html.twig', [
+                    'fakeEmailError' => $fakeEmailError,
+                    'existingUserError' => $existingUserError,
+                    'registrationForm' => $form,
+                ]);
+            }
             
-            // Gestion d'adresse déjà associée à un compte
+            // Gestion d'adresse mail déjà associée à un compte
             $existingUsers = $userRepository->findAll();
+            $existingUsersMails = [];
             foreach ($existingUsers as $key => $existingUser) {
-                if ($existingUser->getEmail() == $form->get('email')->getData()) {
-                    $sameEmailError = true;
+                array_push($existingUsersMails, $existingUser->getEmail());
+            }
+            foreach ($existingUsersMails as $key => $mail) {
+                if ($mail == $form->get('email')->getData()) {
+                    $existingUserError = true;
                     return $this->render('registration/register.html.twig', [
-                        'sameEmailError' => $sameEmailError,
+                        'fakeEmailError' => $fakeEmailError,
+                        'existingUserError' => $existingUserError,
                         'registrationForm' => $form,
                     ]);
-                } else {
-                    $user->setEmail($form->get('email')->getData());
                 }
             }
 
@@ -53,7 +65,7 @@ class RegistrationController extends AbstractController
             );
 
             // Définition du rôle de l'utilisateur
-            $user->setRoles('ROLE_USER');
+            $user->setRoles(['ROLE_USER']);
 
             // Enregistrement de l'utilisateur en BDD
             $userRepository->save($user, true);
@@ -64,7 +76,8 @@ class RegistrationController extends AbstractController
 
         // Rendu du formulaire
         return $this->render('registration/register.html.twig', [
-            'sameEmailError' => $sameEmailError,
+            'fakeEmailError' => $fakeEmailError,
+            'existingUserError' => $existingUserError,
             'registrationForm' => $form,
         ]);
     }

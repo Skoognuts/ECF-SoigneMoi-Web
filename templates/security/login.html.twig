@@ -8,11 +8,15 @@
 
     <main class="center-wrapper">
         <form method="post">
-            <h2 class="h3 mb-3 font-weight-normal text-center">Connexion</h2>
-            <label for="inputEmail">E-mail</label>
-            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
-            <label for="inputPassword" class="mt-2">Mot de passe</label>
-            <input type="password" name="password" id="inputPassword" class="form-control" required>
+            <h2 class="mb-3 font-weight-normal text-center">Connexion</h2>
+            <div class="d-flex flex-row justify-content-between align-items-center w-100 mb-2">
+                <label for="inputEmail">E-mail</label>
+                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control form-text-input" required autofocus>
+            </div>
+            <div class="d-flex flex-row justify-content-between align-items-center w-100 mb-4">
+                <label for="inputPassword" class="mt-2">Mot de passe</label>
+                <input type="password" name="password" id="inputPassword" class="form-control form-text-input" required>
+            </div>
 
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 

@@ -20,6 +20,9 @@ header {
   height: 50px;
   background: rgba(0, 0, 0, 0.8);
 }
+header a {
+  text-decoration: none;
+}
 header img {
   width: 40px;
   height: 40px;
@@ -108,4 +111,19 @@ main {
 
 .text-justified {
   text-align: justify;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 350px;
+}
+
+.form-text-input {
+  width: 70%;
+  min-height: 30px;
+  padding-left: 15px;
+  border-radius: 15px;
+  border: 1px solid gray;
 }/*# sourceMappingURL=style.css.map */

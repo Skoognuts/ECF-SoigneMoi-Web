@@ -27,21 +27,12 @@ class RegistrationFormType extends AbstractType
                 'label' => 'E-mail'
             ])
             ->add('plainPassword', PasswordType::class, [
+                'required' => true,
                 'mapped' => false,
                 'attr' => [
                     'class' => 'form-text-input required'
                 ],
                 'label' => 'Mot de passe',
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez entrer un mot de passe',
-                    ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Votre mot de passe doit être d\'au moins {{ limit }} caractères',
-                        'max' => 4096,
-                    ]),
-                ],
             ])
             ->add('firstname', TextType::class, [
                 'required' => true,
@@ -65,12 +56,9 @@ class RegistrationFormType extends AbstractType
                 ]
             ])
             ->add('agreeTerms', CheckboxType::class, [
+                'required' => true,
+                'label' => 'J\'accepte les termes et conditions',
                 'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'Veuillez agréer les termes et conditions',
-                    ]),
-                ],
                 'attr' => [
                     'class' => 'form-checkbox-input required'
                 ]
