@@ -41,9 +41,11 @@ class SecurityController extends AbstractController
         ]);
     }
 
+    // Route d'accès refusé
     #[Route('/access-denied', name: 'app_access_denied')]
     public function index(): Response
     {
+        // Rendu de la page 
         return $this->render('security/access_denied.html.twig', []);
     }
 
@@ -51,7 +53,7 @@ class SecurityController extends AbstractController
     #[Route(path: '/logout', name: 'app_logout')]
     public function logout(): Response
     {
-        // Déconnexion
+        // Redirection vers la page d'accueil
         return $this->redirectToRoute('app_landing_page', [], Response::HTTP_SEE_OTHER);
     }
 

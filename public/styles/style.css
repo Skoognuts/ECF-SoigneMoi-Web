@@ -17,6 +17,7 @@ body {
 
 header {
   width: 100%;
+  height: 50px;
   background: rgba(0, 0, 0, 0.8);
 }
 header img {
@@ -81,6 +82,15 @@ main {
 }
 .cookie-notice-wrapper .cookie-notice a {
   text-decoration: none;
+}
+
+.center-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: calc(100vh - 150px);
 }
 
 .card {
