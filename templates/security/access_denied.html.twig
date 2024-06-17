@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accès Refusé{% endblock %}
+
+{% block body %}
+
+    {{ include('_parts/_header.html.twig') }}
+
+    <main class="center-wrapper">
+        <div>
+            <h2 class="h3 mb-5 font-weight-normal text-center">Accès Refusé</h2>
+            <a class="btn btn-primary w-100" href="{{ path('app_landing_page') }}">Retour</a>
+        </div>
+    </main>
+
+    {{ include('_parts/_footer.html.twig') }}
+
+{% endblock %}
