@@ -19,7 +19,73 @@
 
     <main>
         <img class="w-100 m-0" src="{{ asset('images/overview.jpg') }}">
-
+        <h2 class="text-center ps-2 pe-2">Nos médecins à votre disposition 7 jours sur 7</h2>
+        <p class="ps-2 pe-2">Inscrivez vous ou connectez vous pour prendre rendez-vous dès maintenant avec un de nos médecins spécialisés.</p>
+        <div class="d-flex flex-column flex-md-row justify-content-center align-items-center ps-2 pe-2">
+            <a class="btn btn-primary me-md-2 mb-2 mb-md-0" href="{{ path('app_login') }}">Se Connecter</a>
+            <a class="btn btn-primary" href="{{ path('app_register') }}">S'Enregistrer</a>
+        </div>
+        <h2 class="text-center mt-4 ps-2 pe-2">Un problème de santé ?</h2>
+        <div class="d-flex flex-row justify-content-center flex-wrap w-100">
+            <div class="card m-2 p-2">
+                <img class="card-img-top align-self-center mt-2" src="{{ asset('images/list_1.svg') }}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Etat général</h5>
+                    <p class="card-text">État grippal, fièvre, insolation, maux de tête, nausées / vomissements, renouvellement d'ordonnance ...</p>
+                </div>
+            </div>
+            <div class="card m-2 p-2">
+                <img class="card-img-top align-self-center mt-2" src="{{ asset('images/list_2.svg') }}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Santé intime</h5>
+                    <p class="card-text">Brûlures urinaires, les infections sexuellement transmissibles (ist), pertes vaginales / démangeaisons vulvaires, problème anal / hémorroïdes, troubles érectiles ...</p>
+                </div>
+            </div>
+            <div class="card m-2 p-2">
+                <img class="card-img-top align-self-center mt-2" src="{{ asset('images/list_3.svg') }}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Infection des voies respiratoires</h5>
+                    <p class="card-text">État grippal, fièvre, mal à l'oreille, maux de gorge, maux de tête, rhume, toux ...</p>
+                </div>
+            </div>
+            <div class="card m-2 p-2">
+                <img class="card-img-top align-self-center mt-2" src="{{ asset('images/list_4.svg') }}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Nez / Gorge / Oreille</h5>
+                    <p class="card-text">Mal à l'oreille, maux de gorge, rhume, sifflement dans l'oreille ...</p>
+                </div>
+            </div>
+            <div class="card m-2 p-2">
+                <img class="card-img-top align-self-center mt-2" src="{{ asset('images/list_5.svg') }}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Problème digestif</h5>
+                    <p class="card-text">Brûlures d'estomac, constipation, diarrhées, nausées / vomissements, problème anal / hémorroïdes ...</p>
+                </div>
+            </div>
+            <div class="card m-2 p-2">
+                <img class="card-img-top align-self-center mt-2" src="{{ asset('images/list_6.svg') }}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Problème de peau</h5>
+                    <p class="card-text">Autre problème de peau, brûlures superficielles, coup de soleil, grain de beauté, morsure de tique, piqûre d'insecte, plaies et morsures ...</p>
+                </div>
+            </div>
+            <div class="card m-2 p-2">
+                <img class="card-img-top align-self-center mt-2" src="{{ asset('images/list_7.svg') }}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Yeux</h5>
+                    <p class="card-text">Oeil rouge, paupière rouge / gonflée, rhume des foins ...</p>
+                </div>
+            </div>
+            <div class="card m-2 p-2">
+                <img class="card-img-top align-self-center mt-2" src="{{ asset('images/list_8.svg') }}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Ostéo articulaire</h5>
+                    <p class="card-text">Mal à la nuque, mal de dos ...</p>
+                </div>
+            </div>
+        </div>
+        <h2 class="text-center mt-4 ps-2 pe-2">A Propos de notre établissement</h2>
+        <p class="text-center ps-2 pe-2">Comptant parmi les plus vastes structures hospitalières de France, il regroupe un ensemble alliant tradition et modernité à l'image, entre autres, du Tripode (1978) et de l'hôpital des enfants (1992). Il constitue un centre de soins aux compétences et équipements très étendus, permettant la prise en charge et le traitement des pathologies les plus diverses.</p>
     </main>
 
     {{ include('_parts/_footer.html.twig') }}

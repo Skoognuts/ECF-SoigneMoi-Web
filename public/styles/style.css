@@ -83,6 +83,19 @@ main {
   text-decoration: none;
 }
 
+.card {
+  min-width: 300px;
+  max-width: 300px;
+  border-radius: 10px;
+}
+
+.card-img-top {
+  width: 70px;
+  height: 70px;
+  border: 1px solid blue;
+  border-radius: 50%;
+}
+
 .text-justified {
   text-align: justify;
 }/*# sourceMappingURL=style.css.map */
