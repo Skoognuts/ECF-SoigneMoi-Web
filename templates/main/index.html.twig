@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Stay index{% endblock %}
+
+{% block body %}
+    <h1>Stay index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date_from</th>
+                <th>Date_to</th>
+                <th>Reason</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for stay in stays %}
+            <tr>
+                <td>{{ stay.id }}</td>
+                <td>{{ stay.dateFrom ? stay.dateFrom|date('Y-m-d') : '' }}</td>
+                <td>{{ stay.dateTo ? stay.dateTo|date('Y-m-d') : '' }}</td>
+                <td>{{ stay.reason }}</td>
+                <td>
+                    <a href="{{ path('app_main_show', {'id': stay.id}) }}">show</a>
+                    <a href="{{ path('app_main_edit', {'id': stay.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_main_new') }}">Create new</a>
+{% endblock %}
