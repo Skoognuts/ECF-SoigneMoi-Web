@@ -39,7 +39,11 @@
                 {{ form_label(registrationForm.agreeTerms) }}
                 {{ form_widget(registrationForm.agreeTerms) }}
             </div>
-            <button type="submit" class="btn btn-primary w-100">S'Enregistrer</button>
+
+            <p>Vous avez déjà un compte ? <a href="{{ path('app_login') }}">Se connecter</a></p>
+
+            <button type="submit" class="btn btn-primary w-100 mb-2">S'Enregistrer</button>
+            <a class="btn btn-light w-100" href="{{ path('app_landing_page') }}">Retour</a>
         {{ form_end(registrationForm) }}
     </main>
 
