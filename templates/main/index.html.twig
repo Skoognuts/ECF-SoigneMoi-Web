@@ -6,40 +6,45 @@
 
     {{ include('_parts/_header.html.twig') }}
 
-    <main>
-        <h1>Stay index</h1>
+    <main class="d-flex flex-column align-items-center">
+        <div class="card user-card mt-3 mb-2 p-2">
+            <div class="d-flex flex-row align-items-center mb-2">
+                <img style="width: 60px; height: auto;" src="{{ asset('images/user.png') }}" alt="User">
+                <div class="d-flex flex-column">
+                    <h2 class="m-0 ms-2">{{ currentUser.firstname }} {{ currentUser.lastName }}</h2>
+                    <p class="m-0 ms-2">{{ currentUser.address }}</p>
+                </div>
+            </div>
+        </div>
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Date_from</th>
-                    <th>Date_to</th>
-                    <th>Reason</th>
-                    <th>actions</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for stay in stays %}
-                <tr>
-                    <td>{{ stay.id }}</td>
-                    <td>{{ stay.dateFrom ? stay.dateFrom|date('Y-m-d') : '' }}</td>
-                    <td>{{ stay.dateTo ? stay.dateTo|date('Y-m-d') : '' }}</td>
-                    <td>{{ stay.reason }}</td>
-                    <td>
-                        <a href="{{ path('app_main_show', {'id': stay.id}) }}">show</a>
-                        <a href="{{ path('app_main_edit', {'id': stay.id}) }}">edit</a>
-                    </td>
-                </tr>
+        <div class="card user-card mb-2 p-2">
+            <h3>Séjours à venir</h3>
+            {% for stay in incommingStays %}
+
             {% else %}
-                <tr>
-                    <td colspan="5">no records found</td>
-                </tr>
+                <p class="text-center small">Aucun séjour à venir</p>
             {% endfor %}
-            </tbody>
-        </table>
+        </div>
 
-        <a href="{{ path('app_main_new') }}">Create new</a>
+        <div class="card user-card mb-2 p-2">
+            <h3>Séjours en cours</h3>
+            {% for stay in incommingStays %}
+
+            {% else %}
+                <p class="text-center small">Aucun séjour en cours</p>
+            {% endfor %}
+        </div>
+
+        <div class="card user-card p-2">
+            <h3>Séjours passés</h3>
+            {% for stay in incommingStays %}
+
+            {% else %}
+                <p class="text-center small">Aucun séjour passé</p>
+            {% endfor %}
+        </div>
+
+        <a class="btn btn-primary mt-3" href="{{ path('app_main_new') }}">Prendre RDV</a>
     </main>
 
     {{ include('_parts/_footer.html.twig') }}

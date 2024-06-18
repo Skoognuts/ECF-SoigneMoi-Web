@@ -25,9 +25,20 @@ class MainController extends AbstractController
     #[Route('/', name: 'app_main', methods: ['GET'])]
     public function index(StayRepository $stayRepository): Response
     {
+        // Déclaration des variables
+        $userStays = $stayRepository->findAllByUser($this->currentUser);
+
+        // Tri des rendez-vous
+        $incommingStays = [];
+        $currentStays = [];
+        $pastStays = [];
+
         // Rendu de la page
         return $this->render('main/index.html.twig', [
-            'stays' => $stayRepository->findAll(),
+            'currentUser' => $this->currentUser,
+            'incommingStays' => $incommingStays,
+            'currentStays' => $currentStays,
+            'pastStays' => $pastStays
         ]);
     }
 
@@ -56,24 +67,6 @@ class MainController extends AbstractController
     {
         return $this->render('main/show.html.twig', [
             'stay' => $stay,
-        ]);
-    }
-
-    #[Route('/{id}/edit', name: 'app_main_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Stay $stay, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(StayType::class, $stay);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_main_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('main/edit.html.twig', [
-            'stay' => $stay,
-            'form' => $form,
         ]);
     }
 
