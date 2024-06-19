@@ -1,32 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Stay{% endblock %}
+{% block title %}Séjour{% endblock %}
 
 {% block body %}
-    <h1>Stay</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ stay.id }}</td>
-            </tr>
-            <tr>
-                <th>Date_from</th>
-                <td>{{ stay.dateFrom ? stay.dateFrom|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Date_to</th>
-                <td>{{ stay.dateTo ? stay.dateTo|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Reason</th>
-                <td>{{ stay.reason }}</td>
-            </tr>
-        </tbody>
-    </table>
+    {{ include('_parts/_header.html.twig') }}
 
-    <a href="{{ path('app_main') }}">back to list</a>
+    <main class="d-flex flex-column align-items-center mb-2">
+        <div class="card user-card mt-3 mb-3 p-2">
+            <div class="d-flex flex-row align-items-center mb-2">
+                <img style="width: 60px; height: auto;" src="{{ asset('images/user.png') }}" alt="User">
+                <div class="d-flex flex-column">
+                    <h2 class="m-0 ms-2">{{ currentUser.firstname }} {{ currentUser.lastName }}</h2>
+                    <p class="m-0 ms-2">{{ currentUser.address }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card user-card mb-2 p-2">
+            <h3>Séjour : {{ stay.reason }}</h3>
+            <ul>
+                <li><b>Du :</b> {{ stay.dateFrom|format_datetime(locale='fr',pattern="dd-MM-YYYY") }}</li>
+                <li><b>Au :</b> {{ stay.dateTo|format_datetime(locale='fr',pattern="dd-MM-YYYY") }}</li>
+                <li><b>Motif :</b> {{ stay.reason }}</li>
+                <li><b>Docteur :</b> {{ stay.doctor }}</li>
+                <li><b>Spécialité :</b> {{ stay.doctor.specialty.name }}</li>
+            </ul>
+        </div>
+    </main>
 
     {{ include('main/_delete_form.html.twig') }}
+
+    <form>
+        <a class="btn btn-light w-100 mt-2" href="{{ path('app_main') }}">Retour</a>
+    </form>
+
+    {{ include('_parts/_footer.html.twig') }}
+
 {% endblock %}

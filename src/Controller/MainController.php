@@ -173,14 +173,18 @@ class MainController extends AbstractController
         ]);
     }
 
+    // Route d'affichage d'un séjour
     #[Route('/{id}', name: 'app_main_show', methods: ['GET'])]
     public function show(Stay $stay): Response
     {
+        // Rendu de la page
         return $this->render('main/show.html.twig', [
+            'currentUser' => $this->currentUser,
             'stay' => $stay,
         ]);
     }
 
+    // Route de suppression d'un séjour
     #[Route('/{id}', name: 'app_main_delete', methods: ['POST'])]
     public function delete(Request $request, Stay $stay, EntityManagerInterface $entityManager): Response
     {
@@ -189,6 +193,7 @@ class MainController extends AbstractController
             $entityManager->flush();
         }
 
+        // Redirection après suppression
         return $this->redirectToRoute('app_main', [], Response::HTTP_SEE_OTHER);
     }
 }

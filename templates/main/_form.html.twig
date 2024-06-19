@@ -18,12 +18,11 @@
         {{ form_label(form.date_to) }}
         {{ form_widget(form.date_to) }}
     </div>
-    <div class="d-flex flex-row justify-content-between align-items-center w-100 mb-3">
+    <div class="d-flex flex-row justify-content-between align-items-center w-100 mb-5">
         {{ form_label(form.specialty) }}
         {{ form_widget(form.specialty) }}
     </div>
 
-    <div class="d-flex flex-row justify-content-center">
-        <button class="btn btn-primary">{{ button_label|default('Sélectionner un Docteur') }}</button>
-    </div>
+    <button class="btn btn-primary">{{ button_label|default('Sélectionner un Docteur') }}</button>
+
 {{ form_end(form) }}

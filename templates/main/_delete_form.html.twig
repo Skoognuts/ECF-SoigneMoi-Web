@@ -1,4 +1,4 @@
 <form method="post" action="{{ path('app_main_delete', {'id': stay.id}) }}" onsubmit="return confirm('Votre séjour sera supprimé définitivement ! Continuer ?');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ stay.id) }}">
-    <button class="btn btn-danger">Annuler</button>
+    <button class="btn btn-danger">Annuler le RDV</button>
 </form>
