@@ -3,7 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Stay;
-use App\Entity\User;
+use App\Entity\Specialty;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -14,20 +16,38 @@ class StayType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('date_from', null, [
+            ->add('reason', TextType::class, [
+                'required' => true,
+                'label' => 'Motif',
+                'attr' => [
+                    'class' => 'form-text-input required'
+                ]
+            ])
+            ->add('date_from', DateType::class, [
                 'widget' => 'single_text',
+                'required' => true,
+                'attr' => [
+                    'class' => 'form-date-input',
+                ],
+                'label' => 'Du'
             ])
-            ->add('date_to', null, [
+            ->add('date_to', DateType::class, [
                 'widget' => 'single_text',
+                'required' => true,
+                'attr' => [
+                    'class' => 'form-date-input',
+                ],
+                'label' => 'Au'
             ])
-            ->add('reason')
-            ->add('user', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'id',
-            ])
-            ->add('doctor', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'id',
+            ->add('specialty', EntityType::class, [
+                'required' => true,
+                'mapped' => false,
+                'class' => Specialty::class,
+                'label' => 'Specialité',
+                'placeholder' => 'Choisir une spécialté',
+                'attr' => [
+                    'class' => 'form-text-input required'
+                ]
             ])
         ;
     }

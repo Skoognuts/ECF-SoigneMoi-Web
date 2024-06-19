@@ -31,7 +31,7 @@ class Stay
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'doctor_stays')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?User $doctor = null;
 
     /**

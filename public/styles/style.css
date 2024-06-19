@@ -109,9 +109,11 @@ form {
   flex-direction: column;
   justify-content: space-between;
   min-width: 350px;
+  max-width: 350px;
 }
 
-.form-text-input {
+.form-text-input,
+.form-date-input {
   width: 70%;
   min-height: 30px;
   padding-left: 15px;
