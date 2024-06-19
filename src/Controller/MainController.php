@@ -26,12 +26,28 @@ class MainController extends AbstractController
     public function index(StayRepository $stayRepository): Response
     {
         // Déclaration des variables
+        $today = new \DateTime('now');
+        $todayFormated = $today->format('d-m-Y');
         $userStays = $stayRepository->findAllByUser($this->currentUser);
 
         // Tri des rendez-vous
         $incommingStays = [];
         $currentStays = [];
         $pastStays = [];
+
+        foreach ($userStays as $key => $stay) {
+            $stayFromDate = $stay->getDateFrom();
+            $stayToDate = $stay->getDateTo();
+            $stayFromDateFormated = $stayFromDate->format("d-m-Y");
+            $stayToDateFormated = $stayToDate->format("d-m-Y");
+            if ($stayFromDateFormated > $todayFormated) {
+                array_push($incommingStays, $stay);
+            } elseif ($stayToDateFormated < $todayFormated) {
+                array_push($pastStays, $stay);
+            } elseif ($stayFromDateFormated <= $todayFormated && $stayToDateFormated >= $todayFormated) {
+                array_push($currentStays, $stay);
+            }
+        }
 
         // Rendu de la page
         return $this->render('main/index.html.twig', [
