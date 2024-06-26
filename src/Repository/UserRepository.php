@@ -50,4 +50,18 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             $this->getEntityManager()->flush();
         }
     }
+
+    /**
+     * @return User[] Returns an array of Stay objects
+     */
+    public function findDoctors(): array
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.roles LIKE :val')
+            ->setParameter('val', '%'.'ROLE_DOCTOR'.'%')
+            ->orderBy('u.lastname', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }
