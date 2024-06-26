@@ -1,50 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User{% endblock %}
+{% block title %}Espace Administrateur{% endblock %}
 
 {% block body %}
-    <h1>User</h1>
+    
+    {{ include('_parts/_header.html.twig') }}
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ user.email }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ user.password }}</td>
-            </tr>
-            <tr>
-                <th>Roles</th>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-            </tr>
-            <tr>
-                <th>Firstname</th>
-                <td>{{ user.firstname }}</td>
-            </tr>
-            <tr>
-                <th>Lastname</th>
-                <td>{{ user.lastname }}</td>
-            </tr>
-            <tr>
-                <th>Address</th>
-                <td>{{ user.address }}</td>
-            </tr>
-            <tr>
-                <th>Registration_number</th>
-                <td>{{ user.registrationNumber }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <main class="d-flex flex-column align-items-center mb-2">
+        <div class="card user-card mt-3 mb-3 p-2">
+            <h3>Dr {{ user.lastname }} {{ user.firstname }}</h3>
+            <ul>
+                <li><b>Matricule :</b> {{ user.registrationNumber }}</li>
+                <li><b>E-mail :</b> {{ user.email }}</li>
+                <li><b>Spécialité :</b> {{ user.specialty.name }}</li>
+            </ul>
+        </div>
+    </main>
 
-    <a href="{{ path('app_admin_index') }}">back to list</a>
+    <form>
+        <a class="btn btn-primary w-100 mt-2" href="{{ path('app_admin') }}">Retour</a>
+    </form>
 
-    <a href="{{ path('app_admin_edit', {'id': user.id}) }}">edit</a>
+    {{ include('_parts/_footer.html.twig') }}
 
-    {{ include('admin/_delete_form.html.twig') }}
 {% endblock %}
