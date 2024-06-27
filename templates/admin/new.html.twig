@@ -1,11 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New User{% endblock %}
+{% block title %}Espace Administrateur{% endblock %}
 
 {% block body %}
-    <h1>Create new User</h1>
 
-    {{ include('admin/_form.html.twig') }}
+    {{ include('_parts/_header.html.twig') }}
 
-    <a href="{{ path('app_admin_index') }}">back to list</a>
+    <div class="card user-card align-items-center mt-3 mb-2 p-2">
+        <h3>Création d'un Docteur</h3>
+        {{ include('admin/_form.html.twig') }}
+    </div>
+
+    <form>
+            <a class="btn btn-light w-100" href="{{ path('app_admin') }}">Retour</a>
+        </form>
+    </main>
+
+    {{ include('_parts/_footer.html.twig') }}
+
 {% endblock %}
