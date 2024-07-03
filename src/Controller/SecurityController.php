@@ -17,7 +17,7 @@ class SecurityController extends AbstractController
             if (in_array('ROLE_ADMIN', $this->getUser()->getRoles(), true)) {
                 return $this->redirectToRoute('app_admin');
             } else if (in_array('ROLE_DOCTOR', $this->getUser()->getRoles(), true)) {
-                return $this->redirectToRoute('app_access_denied');
+                return $this->redirectToRoute('app_doctor');
             } else if (in_array('ROLE_SECRETARY', $this->getUser()->getRoles(), true)) {
                 return $this->redirectToRoute('app_access_denied');
             } else if (in_array('ROLE_USER', $this->getUser()->getRoles(), true)) {

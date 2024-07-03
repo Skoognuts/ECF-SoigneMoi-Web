@@ -54,7 +54,7 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
         if (in_array('ROLE_ADMIN', $token->getUser()->getRoles(), true)) {
             return new RedirectResponse($this->urlGenerator->generate('app_admin'));
         } else if (in_array('ROLE_DOCTOR', $token->getUser()->getRoles(), true)) {
-            return new RedirectResponse($this->urlGenerator->generate('app_access_denied'));
+            return new RedirectResponse($this->urlGenerator->generate('app_doctor'));
         } else if (in_array('ROLE_SECRETARY', $token->getUser()->getRoles(), true)) {
             return new RedirectResponse($this->urlGenerator->generate('app_access_denied'));
         } else if (in_array('ROLE_USER', $token->getUser()->getRoles(), true)) {
