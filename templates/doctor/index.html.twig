@@ -1,20 +1,69 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DoctorController!{% endblock %}
+{% block title %}Dr. {{ currentUser.lastname }}{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    {{ include('_parts/_header.html.twig') }}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/skoog/Desktop/ECF/Web/src/Controller/DoctorController.php</code></li>
-        <li>Your template at <code>C:/Users/skoog/Desktop/ECF/Web/templates/doctor/index.html.twig</code></li>
-    </ul>
-</div>
+    <main class="d-flex flex-column align-items-center">
+        <div class="card user-card mt-3 mb-3 p-2">
+            <div class="d-flex flex-row align-items-center mb-2">
+                <img style="width: 60px; height: auto;" src="{{ asset('images/user.png') }}" alt="User">
+                <div class="d-flex flex-column">
+                    <h2 class="m-0 ms-2">Dr. {{ currentUser.lastName }}</h2>
+                    <p class="m-0 ms-2">{{ currentUser.specialty.name }}</p>
+                    <p class="small m-0 ms-2">Matricule : {{ currentUser.registrationNumber }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card user-card mb-2 p-2">
+            <h3>Séjours à venir</h3>
+            <ul>
+                {% for stay in incommingStays %}
+                    <li>
+                        <a href="{{ path('app_main_show', {'id': stay.id}) }}">
+                            {{ stay.user.lastname }} {{stay.user.firstname }} - {{ stay.reason }} - Du {{ stay.dateFrom|format_datetime(locale='fr',pattern="dd-MM") }} au {{ stay.dateTo|format_datetime(locale='fr',pattern="dd-MM-YYYY") }}
+                        </a>
+                    </li>
+                {% else %}
+                    <p class="text-center">Aucun séjour à venir</p>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="card user-card mb-2 p-2">
+            <h3>Séjours en cours</h3>
+            <ul>
+                {% for stay in currentStays %}
+                    <li>
+                        <a href="{{ path('app_main_show', {'id': stay.id}) }}">
+                            {{ stay.user.lastname }} {{stay.user.firstname }} - {{ stay.reason }} - Du {{ stay.dateFrom|format_datetime(locale='fr',pattern="dd-MM") }} au {{ stay.dateTo|format_datetime(locale='fr',pattern="dd-MM-YYYY") }}
+                        </a>
+                    </li>
+                {% else %}
+                    <p class="text-center">Aucun séjour en cours</p>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="card user-card p-2">
+            <h3>Séjours passés</h3>
+            <ul>
+                {% for stay in pastStays %}
+                    <li>
+                        <a href="{{ path('app_main_show', {'id': stay.id}) }}">
+                            {{ stay.user.lastname }} {{stay.user.firstname }} - {{ stay.reason }} - Du {{ stay.dateFrom|format_datetime(locale='fr',pattern="dd-MM") }} au {{ stay.dateTo|format_datetime(locale='fr',pattern="dd-MM-YYYY") }}
+                        </a>
+                    </li>
+                {% else %}
+                    <p class="text-center">Aucun séjour passé</p>
+                {% endfor %}
+            </ul>
+        </div>
+    </main>
+
+    {{ include('_parts/_footer.html.twig') }}
+
 {% endblock %}

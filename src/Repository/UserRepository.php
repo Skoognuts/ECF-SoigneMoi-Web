@@ -52,13 +52,27 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
     /**
-     * @return User[] Returns an array of Stay objects
+     * @return User[] Returns an array of User objects
      */
     public function findDoctors(): array
     {
         return $this->createQueryBuilder('u')
             ->andWhere('u.roles LIKE :val')
             ->setParameter('val', '%'.'ROLE_DOCTOR'.'%')
+            ->orderBy('u.lastname', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @return User[] Returns an array of User objects
+     */
+    public function findPatients(): array
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.roles LIKE :val')
+            ->setParameter('val', '%'.'ROLE_USER'.'%')
             ->orderBy('u.lastname', 'ASC')
             ->getQuery()
             ->getResult()

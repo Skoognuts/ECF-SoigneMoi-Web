@@ -23,7 +23,7 @@
                 {% for stay in incommingStays %}
                     <li>
                         <a href="{{ path('app_main_show', {'id': stay.id}) }}">
-                            {{ stay.reason }} - du {{ stay.dateFrom|format_datetime(locale='fr',pattern="dd-MM") }} au {{ stay.dateTo|format_datetime(locale='fr',pattern="dd-MM-YYYY") }} avec le Docteur {{ stay.doctor.lastname }} ({{ stay.doctor.specialty.name }})
+                            {{ stay.reason }} - Du {{ stay.dateFrom|format_datetime(locale='fr',pattern="dd-MM") }} au {{ stay.dateTo|format_datetime(locale='fr',pattern="dd-MM-YYYY") }} avec le Docteur {{ stay.doctor.lastname }} ({{ stay.doctor.specialty.name }})
                         </a>
                     </li>
                 {% else %}
@@ -38,7 +38,7 @@
                 {% for stay in currentStays %}
                     <li>
                         <a href="{{ path('app_main_show', {'id': stay.id}) }}">
-                            {{ stay.reason }} - du {{ stay.dateFrom|format_datetime(locale='fr',pattern="dd-MM") }} au {{ stay.dateTo|format_datetime(locale='fr',pattern="dd-MM-YYYY") }} avec le Docteur {{ stay.doctor.lastname }} ({{ stay.doctor.specialty.name }})
+                            {{ stay.reason }} - Du {{ stay.dateFrom|format_datetime(locale='fr',pattern="dd-MM") }} au {{ stay.dateTo|format_datetime(locale='fr',pattern="dd-MM-YYYY") }} avec le Docteur {{ stay.doctor.lastname }} ({{ stay.doctor.specialty.name }})
                         </a>
                     </li>
                 {% else %}
@@ -53,7 +53,7 @@
                 {% for stay in pastStays %}
                     <li>
                         <a href="{{ path('app_main_show', {'id': stay.id}) }}">
-                            {{ stay.reason }} - du {{ stay.dateFrom|format_datetime(locale='fr',pattern="dd-MM") }} au {{ stay.dateTo|format_datetime(locale='fr',pattern="dd-MM-YYYY") }} avec le Docteur {{ stay.doctor.lastname }} ({{ stay.doctor.specialty.name }})
+                            {{ stay.reason }} - Du {{ stay.dateFrom|format_datetime(locale='fr',pattern="dd-MM") }} au {{ stay.dateTo|format_datetime(locale='fr',pattern="dd-MM-YYYY") }} avec le Docteur {{ stay.doctor.lastname }} ({{ stay.doctor.specialty.name }})
                         </a>
                     </li>
                 {% else %}

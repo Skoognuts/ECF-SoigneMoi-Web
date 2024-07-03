@@ -11,8 +11,8 @@
             <div class="d-flex flex-row align-items-center mb-2">
                 <img style="width: 60px; height: auto;" src="{{ asset('images/user.png') }}" alt="User">
                 <div class="d-flex flex-column">
-                    <h2 class="m-0 ms-2">{{ currentUser.firstname }} {{ currentUser.lastName }}</h2>
-                    <p class="m-0 ms-2">{{ currentUser.address }}</p>
+                    <h2 class="m-0 ms-2">{{ stay.user.firstname }} {{ stay.user.lastName }}</h2>
+                    <p class="m-0 ms-2">{{ stay.user.address }}</p>
                 </div>
             </div>
         </div>
@@ -29,11 +29,31 @@
         </div>
     </main>
 
-    {{ include('main/_delete_form.html.twig') }}
+    {% if is_granted('ROLE_DOCTOR') %}
+        {% if isNoticeAndPrescriptionPossible == true %}
+            <form>
+                <a class="btn btn-primary w-100 mt-2" href="{{ path('app_notice_new') }}">Créer un avis</a>
+                <a class="btn btn-primary w-100 mt-2" href="{{ path('app_prescription_new') }}">Créer une préscription</a>
+            </form>
+        {% else %}
+            <form>
+                <a class="btn btn-light w-100 mt-2 disabled" href="#">Créer un avis</a>
+                <a class="btn btn-light w-100 mt-2 disabled" href="#">Créer une préscription</a>
+            </form>
+        {% endif %}
 
-    <form>
-        <a class="btn btn-light w-100 mt-2" href="{{ path('app_main') }}">Retour</a>
-    </form>
+        <form>
+            <a class="btn btn-light w-100 mt-2" href="{{ path('app_doctor') }}">Retour</a>
+        </form>
+    {% else %}
+        {{ include('main/_delete_form.html.twig') }}
+
+        <form>
+            <a class="btn btn-light w-100 mt-2" href="{{ path('app_main') }}">Retour</a>
+        </form>
+    {% endif %}
+
+    
 
     {{ include('_parts/_footer.html.twig') }}
 

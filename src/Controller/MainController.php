@@ -177,10 +177,26 @@ class MainController extends AbstractController
     #[Route('/{id}', name: 'app_main_show', methods: ['GET'])]
     public function show(Stay $stay): Response
     {
+        // Déclaration des variables
+        $today = new \DateTime('now');
+        $todayFormated = $today->format('d-m-Y');
+        $isNoticeAndPrescriptionPossible = false;
+
+        // Vérificattion de la plage de date
+        $stayFromDate = $stay->getDateFrom();
+        $stayToDate = $stay->getDateTo();
+        $stayFromDateFormated = $stayFromDate->format("d-m-Y");
+        $stayToDateFormated = $stayToDate->format("d-m-Y");
+
+        if ($stayFromDateFormated <= $todayFormated && $stayToDateFormated >= $todayFormated) {
+            $isNoticeAndPrescriptionPossible = true;
+        }
+
         // Rendu de la page
         return $this->render('main/show.html.twig', [
             'currentUser' => $this->currentUser,
             'stay' => $stay,
+            'isNoticeAndPrescriptionPossible' => $isNoticeAndPrescriptionPossible
         ]);
     }
 
