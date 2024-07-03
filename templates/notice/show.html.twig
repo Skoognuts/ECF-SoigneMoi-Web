@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Notice{% endblock %}
+
+{% block body %}
+    <h1>Notice</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ notice.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ notice.title }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ notice.date ? notice.date|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ notice.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_notice_index') }}">back to list</a>
+
+    <a href="{{ path('app_notice_edit', {'id': notice.id}) }}">edit</a>
+
+    {{ include('notice/_delete_form.html.twig') }}
+{% endblock %}
