@@ -6,7 +6,7 @@
 
     {{ include('_parts/_header.html.twig') }}
 
-    <main class="d-flex flex-column align-items-center mb-2">
+    <main class="d-flex flex-column align-items-center mb-5">
         <div class="card user-card mt-3 mb-3 p-2">
             <div class="d-flex flex-row align-items-center mb-2">
                 <img style="width: 60px; height: auto;" src="{{ asset('images/user.png') }}" alt="User">
@@ -27,33 +27,58 @@
                 <li><b>Spécialité :</b> {{ stay.doctor.specialty.name }}</li>
             </ul>
         </div>
-    </main>
 
-    {% if is_granted('ROLE_DOCTOR') %}
-        {% if isNoticeAndPrescriptionPossible == true %}
+        <div class="card user-card mb-2 p-2">
+            <h3>Avis du Dr. {{ stay.doctor.lastname }} : </h3>
+            <ul>
+                {% for notice in notices %}
+                    <li><b>{{ notice.title }}</b> : {{ notice.description }}</li>
+                {% else %}
+                    <p class="w-100 text-center small">Vous n'avez pas d'avis pour ce séjour</p>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="card user-card mb-2 p-2">
+            <h3>Prescriptions du Dr. {{ stay.doctor.lastname }} : </h3>
+            <ul>
+                {% for prescription in prescriptions %}
+                    <li>
+                        {% if is_granted('ROLE_DOCTOR') %}
+                            <a class="btn btn-warning btn-sm align-self-end p-1 mb-1" href="#">Modifier</a>
+                        {% endif %}
+                        <b>Du {{ prescription.dateFrom|format_datetime(locale='fr',pattern="dd-MM-YYYY") }} au {{ prescription.dateTo|format_datetime(locale='fr',pattern="dd-MM-YYYY") }}</b> : {{ prescription.medication[1] }} - {{ prescription.medication[0] }}
+                    </li>
+                {% else %}
+                    <p class="w-100 text-center small">Vous n'avez pas de prescriptions pour ce séjour</p>
+                {% endfor %}
+            </ul>
+        </div>
+
+        {% if is_granted('ROLE_DOCTOR') %}
+            {% if isNoticeAndPrescriptionPossible == true %}
+                <form>
+                    <a class="btn btn-primary w-100 mt-2" href="{{ path('app_notice_new', {'id' : stay.id}) }}">Créer un avis</a>
+                    <a class="btn btn-primary w-100 mt-2" href="{{ path('app_prescription_new', {'id' : stay.id}) }}">Créer une préscription</a>
+                </form>
+            {% else %}
+                <form>
+                    <a class="btn btn-light w-100 mt-2 disabled" href="#">Créer un avis</a>
+                    <a class="btn btn-light w-100 mt-2 disabled" href="#">Créer une préscription</a>
+                </form>
+            {% endif %}
+
             <form>
-                <a class="btn btn-primary w-100 mt-2" href="{{ path('app_notice_new', {'id' : stay.id}) }}">Créer un avis</a>
-                <a class="btn btn-primary w-100 mt-2" href="{{ path('app_prescription_new', {'id' : stay.id}) }}">Créer une préscription</a>
+                <a class="btn btn-light w-100 mt-2" href="{{ path('app_doctor') }}">Retour</a>
             </form>
         {% else %}
+            {{ include('main/_delete_form.html.twig') }}
+
             <form>
-                <a class="btn btn-light w-100 mt-2 disabled" href="#">Créer un avis</a>
-                <a class="btn btn-light w-100 mt-2 disabled" href="#">Créer une préscription</a>
+                <a class="btn btn-light w-100 mt-2" href="{{ path('app_main') }}">Retour</a>
             </form>
         {% endif %}
-
-        <form>
-            <a class="btn btn-light w-100 mt-2" href="{{ path('app_doctor') }}">Retour</a>
-        </form>
-    {% else %}
-        {{ include('main/_delete_form.html.twig') }}
-
-        <form>
-            <a class="btn btn-light w-100 mt-2" href="{{ path('app_main') }}">Retour</a>
-        </form>
-    {% endif %}
-
-    
+    </main>
 
     {{ include('_parts/_footer.html.twig') }}
 

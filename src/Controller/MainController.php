@@ -181,6 +181,8 @@ class MainController extends AbstractController
         $today = new \DateTime('now');
         $todayFormated = $today->format('d-m-Y');
         $isNoticeAndPrescriptionPossible = false;
+        $notices = $stay->getNotices();
+        $prescriptions = $stay->getPrescriptions();
 
         // Vérificattion de la plage de date
         $stayFromDate = $stay->getDateFrom();
@@ -196,6 +198,8 @@ class MainController extends AbstractController
         return $this->render('main/show.html.twig', [
             'currentUser' => $this->currentUser,
             'stay' => $stay,
+            'notices' => $notices,
+            'prescriptions' => $prescriptions,
             'isNoticeAndPrescriptionPossible' => $isNoticeAndPrescriptionPossible
         ]);
     }
