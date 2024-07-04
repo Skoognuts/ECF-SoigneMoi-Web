@@ -32,7 +32,7 @@
     {% if is_granted('ROLE_DOCTOR') %}
         {% if isNoticeAndPrescriptionPossible == true %}
             <form>
-                <a class="btn btn-primary w-100 mt-2" href="{{ path('app_notice_new') }}">Créer un avis</a>
+                <a class="btn btn-primary w-100 mt-2" href="{{ path('app_notice_new', {'id' : stay.id}) }}">Créer un avis</a>
                 <a class="btn btn-primary w-100 mt-2" href="{{ path('app_prescription_new') }}">Créer une préscription</a>
             </form>
         {% else %}
