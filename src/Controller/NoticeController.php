@@ -57,7 +57,7 @@ class NoticeController extends AbstractController
             $noticeRepository->save($notice, true);
 
             // Redirection après la création de l'avis
-            return $this->redirectToRoute('app_doctor', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_main_show', array('id' => $stay->getId()), Response::HTTP_SEE_OTHER);
         }
 
         // Rendu du formulaire

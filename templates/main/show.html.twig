@@ -33,7 +33,7 @@
         {% if isNoticeAndPrescriptionPossible == true %}
             <form>
                 <a class="btn btn-primary w-100 mt-2" href="{{ path('app_notice_new', {'id' : stay.id}) }}">Créer un avis</a>
-                <a class="btn btn-primary w-100 mt-2" href="{{ path('app_prescription_new') }}">Créer une préscription</a>
+                <a class="btn btn-primary w-100 mt-2" href="{{ path('app_prescription_new', {'id' : stay.id}) }}">Créer une préscription</a>
             </form>
         {% else %}
             <form>
