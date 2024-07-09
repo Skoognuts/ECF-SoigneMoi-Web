@@ -26,14 +26,19 @@ security:
                 lifetime: 604800
             access_denied_url: /access-denied
 
-    access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
-
     role_hierarchy:
         ROLE_SECRETARY: ROLE_USER
         ROLE_DOCTOR: ROLE_SECRETARY
         ROLE_ADMIN: ROLE_DOCTOR
+
+    access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: /cgu, roles: PUBLIC_ACCESS }
+        - { path: ^/doctor, roles: ROLE_DOCTOR }
+        - { path: /, roles: PUBLIC_ACCESS }
+        - { path: ^/main, roles: ROLE_USER }
+        - { path: /register, roles: PUBLIC_ACCESS }
+        - { path: /login, roles: PUBLIC_ACCESS }
 
 when@test:
     security:
