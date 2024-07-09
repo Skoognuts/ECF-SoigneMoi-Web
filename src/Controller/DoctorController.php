@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\StayRepository;
 use App\Repository\NoticeRepository;
 use App\Repository\PrescriptionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,12 +20,11 @@ class DoctorController extends AbstractController
 
     // Route d'affichage de l'espace docteur
     #[Route('/doctor', name: 'app_doctor', methods: ['GET'])]
-    public function index(): Response
+    public function index(StayRepository $stayRepository): Response
     {
         // Déclaration des variables
         $today = new \DateTime('now');
-        $todayFormated = $today->format('d-m-Y');
-        $stays = $this->currentUser->getDoctorStays();
+        $stays = $stayRepository->findAllByDoctor($this->currentUser);
 
         // Tri des rendez-vous
         $incommingStays = [];
@@ -34,13 +34,11 @@ class DoctorController extends AbstractController
         foreach ($stays as $key => $stay) {
             $stayFromDate = $stay->getDateFrom();
             $stayToDate = $stay->getDateTo();
-            $stayFromDateFormated = $stayFromDate->format("d-m-Y");
-            $stayToDateFormated = $stayToDate->format("d-m-Y");
-            if ($stayFromDateFormated > $todayFormated) {
+            if ($stayFromDate > $today) {
                 array_push($incommingStays, $stay);
-            } elseif ($stayToDateFormated < $todayFormated) {
+            } elseif ($stayToDate < $today) {
                 array_push($pastStays, $stay);
-            } elseif ($stayFromDateFormated <= $todayFormated && $stayToDateFormated >= $todayFormated) {
+            } elseif ($stayFromDate <= $today && $stayToDate >= $today) {
                 array_push($currentStays, $stay);
             }
         }

@@ -32,7 +32,6 @@ class MainController extends AbstractController
     {
         // Déclaration des variables
         $today = new \DateTime('now');
-        $todayFormated = $today->format('d-m-Y');
         $userStays = $stayRepository->findAllByUser($this->currentUser);
 
         // Tri des rendez-vous
@@ -43,13 +42,11 @@ class MainController extends AbstractController
         foreach ($userStays as $key => $stay) {
             $stayFromDate = $stay->getDateFrom();
             $stayToDate = $stay->getDateTo();
-            $stayFromDateFormated = $stayFromDate->format("d-m-Y");
-            $stayToDateFormated = $stayToDate->format("d-m-Y");
-            if ($stayFromDateFormated > $todayFormated) {
+            if ($stayFromDate > $today) {
                 array_push($incommingStays, $stay);
-            } elseif ($stayToDateFormated < $todayFormated) {
+            } elseif ($stayToDate < $today) {
                 array_push($pastStays, $stay);
-            } elseif ($stayFromDateFormated <= $todayFormated && $stayToDateFormated >= $todayFormated) {
+            } elseif ($stayFromDate <= $today && $stayToDate >= $today) {
                 array_push($currentStays, $stay);
             }
         }
@@ -179,7 +176,6 @@ class MainController extends AbstractController
     {
         // Déclaration des variables
         $today = new \DateTime('now');
-        $todayFormated = $today->format('d-m-Y');
         $isNoticeAndPrescriptionPossible = false;
         $notices = $stay->getNotices();
         $prescriptions = $stay->getPrescriptions();
@@ -187,10 +183,8 @@ class MainController extends AbstractController
         // Vérificattion de la plage de date
         $stayFromDate = $stay->getDateFrom();
         $stayToDate = $stay->getDateTo();
-        $stayFromDateFormated = $stayFromDate->format("d-m-Y");
-        $stayToDateFormated = $stayToDate->format("d-m-Y");
 
-        if ($stayFromDateFormated <= $todayFormated && $stayToDateFormated >= $todayFormated) {
+        if ($stayFromDate <= $today && $stayToDate >= $today) {
             $isNoticeAndPrescriptionPossible = true;
         }
 

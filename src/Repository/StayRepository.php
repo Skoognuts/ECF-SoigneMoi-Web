@@ -48,4 +48,18 @@ class StayRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    /**
+     * @return Stay[] Returns an array of Stay objects
+     */
+    public function findAllByDoctor(User $doctor): array
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.doctor = :val')
+            ->setParameter('val', $doctor)
+            ->orderBy('s.date_from', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }
