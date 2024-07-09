@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Prescription;
 use App\Form\PrescriptionType;
+use App\Form\PrescriptionEditType;
 use App\Repository\PrescriptionRepository;
 use App\Repository\StayRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -81,21 +82,45 @@ class PrescriptionController extends AbstractController
         ]);
     }
 
+    // Route d'édition de la date de fin de la prescription
     #[Route('/{id}/edit', name: 'app_prescription_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Prescription $prescription, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Prescription $prescription, PrescriptionRepository $prescriptionRepository): Response
     {
-        $form = $this->createForm(PrescriptionType::class, $prescription);
+        // Déclaration des variables
+        $today = new \DateTime('now');
+        $stay = $prescription->getStay();
+        $form = $this->createForm(PrescriptionEditType::class, $prescription);
         $form->handleRequest($request);
+        $dateOrderError = false;
 
+        // Controle du clic
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            // Verifier si l'ordre des dates est bon
+            $prescriptionFromDate = $prescription->getDateFrom();
+            $prescriptionToDate = $form->get('date_to')->getData();
+            if ($prescriptionFromDate > $prescriptionToDate) {
+                $dateOrderError = true;
+                return $this->render('prescription/edit.html.twig', [
+                    'stay' => $stay,
+                    'prescription' => $prescription,
+                    'form' => $form,
+                    'dateOrderError' => $dateOrderError
+                ]);
+            }
 
-            return $this->redirectToRoute('app_doctor', [], Response::HTTP_SEE_OTHER);
+            // Enregistrement de l'instance en BDD
+            $prescriptionRepository->save($prescription, true);
+
+            // Redirection après la modification de la prescription
+            return $this->redirectToRoute('app_main_show', array('id' => $stay->getId()), Response::HTTP_SEE_OTHER);
         }
 
+        // Rendu du formulaire
         return $this->render('prescription/edit.html.twig', [
+            'stay' => $stay,
             'prescription' => $prescription,
             'form' => $form,
+            'dateOrderError' => $dateOrderError
         ]);
     }
 }

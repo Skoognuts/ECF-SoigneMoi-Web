@@ -45,7 +45,11 @@
                 {% for prescription in prescriptions %}
                     <li>
                         {% if is_granted('ROLE_DOCTOR') %}
-                            <a class="btn btn-warning btn-sm align-self-end p-1 mb-1" href="#">Modifier</a>
+                            {% if prescription.dateTo > today %}
+                                <a class="btn btn-warning btn-sm align-self-end p-1 mb-1" href="{{ path('app_prescription_edit', {'id': prescription.id}) }}">Modifier</a>
+                            {% else %}
+                                <a class="btn btn-light btn-sm align-self-end p-1 mb-1 disabled" href="#">Modifier</a>
+                            {% endif %}
                         {% endif %}
                         <b>Du {{ prescription.dateFrom|format_datetime(locale='fr',pattern="dd-MM-YYYY") }} au {{ prescription.dateTo|format_datetime(locale='fr',pattern="dd-MM-YYYY") }}</b> : {{ prescription.medication[1] }} - {{ prescription.medication[0] }}
                     </li>

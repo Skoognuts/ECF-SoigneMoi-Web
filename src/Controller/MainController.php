@@ -191,6 +191,7 @@ class MainController extends AbstractController
         // Rendu de la page
         return $this->render('main/show.html.twig', [
             'currentUser' => $this->currentUser,
+            'today' => $today,
             'stay' => $stay,
             'notices' => $notices,
             'prescriptions' => $prescriptions,
