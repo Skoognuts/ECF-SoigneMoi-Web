@@ -6,6 +6,8 @@ use App\Entity\User;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
+// CORRECTION ECF - ACTIVITE TYPE 3 / COMPETENCE 6 : Préparer et executer les plans de tests d'une application
+
 class UserEntityTest extends KernelTestCase
 {
     private EntityManager $entityManager;
@@ -110,3 +112,6 @@ class UserEntityTest extends KernelTestCase
         $this->assertEquals($deletedUser, null);
     }
 }
+
+// Executer les tests en entrant la commande suivante dans la console :
+// vendor/bin/phpunit tests/Entity/UserEntityTest.php
