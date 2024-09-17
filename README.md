@@ -17,13 +17,11 @@ Cette application sert à la fois d'interface utilisateur web ainsi que d'API po
 2. Installer les dépendances nécessaires :
 > `composer install`
 3. Modifier le fichier d'environnement avec vos variables d'environnement :
-4. Créer le schéma de la base de données :
-> `php bin/console doctrine:schema:update --force`
-5. Hydrater la base de données avec les données issues du dépôt des livrables :
+4. Hydrater la base de données avec les données issues du dépôt des livrables :
 > `https://github.com/Skoognuts/ECF-SoigneMoi-Livrables.git`
-6. Lancer le server :
+5. Lancer le server :
 > `symfony server:start`
-7. Accéder à l'application :
+6. Accéder à l'application :
 > `http://localhost:8000`
 
 ## Contexte
